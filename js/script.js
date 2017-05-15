@@ -5,14 +5,28 @@ var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbe
 // var endpoint = 'https://wind-bow.glitch.me/twitch-api/streams/ca2live';
 
 
+var channelInfo = [];
+var streamInfo = [];
 
-ajaxReq(endpoint)
-  .then(function(val){
-    console.log(val);
-  })
-  .catch( function(err){
-    console.log(err);
-  } )
+
+twitchUsers.forEach(cb);
+
+function cb(channel) {
+  extractData('channels', channelInfo);
+  extractData('streams', streamInfo);
+
+  function extractData(type, arr) {
+    var endpoint = `https://wind-bow.glitch.me/twitch-api/${type}/${channel}`;
+    return ajaxReq(endpoint)
+      .then(function (val){
+        return arr.push(val);
+      })
+      .catch( function (err){
+        console.log(err);
+      } )
+  }
+}
+
 
 function ajaxReq(url) {
   return new Promise( function(resolve, reject){
