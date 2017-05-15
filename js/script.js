@@ -23,37 +23,41 @@ Promise.all( channels )
 
 const displayChannelInfo = function displayChannelInfo(arr = []) {
   var ulEl = document.querySelector('ul');
-
-  return ulEl.innerHTML = arr.map(function(channel){
-    return `
-      <li>
-        <a href="${channel.url}" target="_blank">
-          <div class="channelInfo">
-            <img src="${channel.logo}"></img>
-            <div class="channelDescription">
-              <h1>${channel.display_name}</h1>
-              <p>${channel.followers}</p>
-              <p>${channel.views}</p>
-            </div>
+  return ulEl.innerHTML = arr.map(renderHTML).join('');
+}
+function renderHTML(channel){
+  return `
+    <li>
+      <a href="${channel.url}" target="_blank">
+        <div class="channelInfo">
+          <img src="${channel.logo}"></img>
+          <div class="channelDescription">
+            <h1>${channel.display_name}</h1>
+            <p>Followers: ${channel.followers}</p>
+            <p>Views: ${channel.views}</p>
           </div>
-        </a>
-      </li>
-    `
-  }).join('');
+        </div>
+      </a>
+    </li>
+  `
 }
 
 const isOnline = function isOnline(arr) {
   var divEl = Array.from( document.querySelectorAll('.channelDescription') );
-  console.log(divEl);
-  console.log(arr);
 
   for (let i = 0; i < divEl.length; i++) {
+    var pEl = document.createElement('p');
+
     if (arr[i].stream !== null) {
       var onlineText =  document.createTextNode(arr[i].stream.channel.status);
-      divEl[i].appendChild(onlineText);
+      pEl.appendChild(onlineText);
+      divEl[i].appendChild(pEl);
+
     } else {
+
       var offlineText =  document.createTextNode('offline');
-      divEl[i].appendChild(offlineText)
+      pEl.appendChild(offlineText);
+      divEl[i].appendChild(pEl);
     }
   }
 }
