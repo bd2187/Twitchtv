@@ -1,32 +1,45 @@
-var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
+var streams = twitchUsers.map(function cb(channel) {
+  return ajaxReq(`https://wind-bow.glitch.me/twitch-api/streams/${channel}`);
+});
+var channels = twitchUsers.map(function cb2(channel) {
+  return ajaxReq(`https://wind-bow.glitch.me/twitch-api/channels/${channel}`);
+});
+
+Promise.all( channels )
+.then( function(val){
+  console.log(val);
+  displayChannelInfo(val);
+  return Promise.all( streams );
+} )
+.then( function(val){
+  isOnline(val);
+} )
 
 
-// var endpoint = 'https://wind-bow.glitch.me/twitch-api/channels/ESL_SC2';
-// var endpoint = 'https://wind-bow.glitch.me/twitch-api/streams/ca2live';
+function displayChannelInfo(arr = []) {
+  var ulEl = document.querySelector('ul');
 
-
-var channelInfo = [];
-var streamInfo = [];
-
-
-twitchUsers.forEach(cb);
-
-function cb(channel) {
-  extractData('channels', channelInfo);
-  extractData('streams', streamInfo);
-
-  function extractData(type, arr) {
-    var endpoint = `https://wind-bow.glitch.me/twitch-api/${type}/${channel}`;
-    return ajaxReq(endpoint)
-      .then(function (val){
-        return arr.push(val);
-      })
-      .catch( function (err){
-        console.log(err);
-      } )
-  }
+  return ulEl.innerHTML = arr.map(function(channel){
+    return `
+      <li>
+        <a href="${channel.url}" target="_blank">
+          <div class="channelInfo">
+            <img src="${channel.logo}"></img>
+            <h1>${channel.display_name}</h1>
+          </div>
+        </a>
+      </li>
+    `
+  }).join('');
 }
 
+function isOnline(arr) {
+  var divEl = Array.from( document.querySelectorAll('.channelInfo') );
+  console.log(divEl);
+  console.log(arr);
+
+}
 
 function ajaxReq(url) {
   return new Promise( function(resolve, reject){
@@ -43,6 +56,5 @@ function ajaxReq(url) {
         return reject( xhr.statusText );
       }
     }
-
   } );
 }
