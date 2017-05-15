@@ -27,10 +27,12 @@ const displayChannelInfo = function displayChannelInfo(arr = []) {
 }
 function renderHTML(channel){
   return `
-    <li>
-      <a href="${channel.url}" target="_blank">
+    <li class="channel">
+      <a class="clearfix channelContainer" href="${channel.url}" target="_blank">
         <div class="channelInfo">
-          <img src="${channel.logo}"></img>
+          <div class="channelLogo">
+            <img src="${channel.logo}"></img>
+          </div>
           <div class="channelDescription">
             <h1>${channel.display_name}</h1>
             <p>Followers: ${channel.followers}</p>
