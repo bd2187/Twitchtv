@@ -1,23 +1,27 @@
 var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
-var streams = twitchUsers.map(function cb(channel) {
+
+var streams = twitchUsers.map(requestStreamInfo);
+var channels = twitchUsers.map(requestChannelInfo);
+function requestStreamInfo(channel) {
   return ajaxReq(`https://wind-bow.glitch.me/twitch-api/streams/${channel}`);
-});
-var channels = twitchUsers.map(function cb2(channel) {
+}
+function requestChannelInfo(channel) {
   return ajaxReq(`https://wind-bow.glitch.me/twitch-api/channels/${channel}`);
-});
+}
 
 Promise.all( channels )
-.then( function(val){
-  console.log(val);
-  displayChannelInfo(val);
+.then( function(channelsArr){
+  displayChannelInfo(channelsArr);
   return Promise.all( streams );
 } )
-.then( function(val){
-  isOnline(val);
+.then( function(streamArr){
+  isOnline(streamArr);
 } )
+.catch( function(err){
+  console.log(err);
+} );
 
-
-function displayChannelInfo(arr = []) {
+const displayChannelInfo = function displayChannelInfo(arr = []) {
   var ulEl = document.querySelector('ul');
 
   return ulEl.innerHTML = arr.map(function(channel){
@@ -26,7 +30,11 @@ function displayChannelInfo(arr = []) {
         <a href="${channel.url}" target="_blank">
           <div class="channelInfo">
             <img src="${channel.logo}"></img>
-            <h1>${channel.display_name}</h1>
+            <div class="channelDescription">
+              <h1>${channel.display_name}</h1>
+              <p>${channel.followers}</p>
+              <p>${channel.views}</p>
+            </div>
           </div>
         </a>
       </li>
@@ -34,11 +42,20 @@ function displayChannelInfo(arr = []) {
   }).join('');
 }
 
-function isOnline(arr) {
-  var divEl = Array.from( document.querySelectorAll('.channelInfo') );
+const isOnline = function isOnline(arr) {
+  var divEl = Array.from( document.querySelectorAll('.channelDescription') );
   console.log(divEl);
   console.log(arr);
 
+  for (let i = 0; i < divEl.length; i++) {
+    if (arr[i].stream !== null) {
+      var onlineText =  document.createTextNode(arr[i].stream.channel.status);
+      divEl[i].appendChild(onlineText);
+    } else {
+      var offlineText =  document.createTextNode('offline');
+      divEl[i].appendChild(offlineText)
+    }
+  }
 }
 
 function ajaxReq(url) {
