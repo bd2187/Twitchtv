@@ -53,16 +53,50 @@ const isOnline = function isOnline(arr) {
     if (arr[i].stream !== null) {
       var onlineText =  document.createTextNode(arr[i].stream.channel.status);
       pEl.appendChild(onlineText);
+      pEl.classList.add('online');
       divEl[i].appendChild(pEl);
 
     } else {
 
       var offlineText =  document.createTextNode('offline');
       pEl.appendChild(offlineText);
+      pEl.classList.add('offline');
       divEl[i].appendChild(pEl);
     }
   }
 }
+
+function filterUsers() {
+  var buttonsDiv = document.querySelector('.buttons');
+  buttonsDiv.addEventListener('click', cb);
+
+  function cb(evt) {
+    var onlineUsers = Array.from( document.querySelectorAll('.online') );
+    var offlineUsers = Array.from( document.querySelectorAll('.offline') );
+    var allUsers = Array.from( document.querySelectorAll('.channelInfo') );
+    var idName = evt.target.id;
+
+    if ( idName === 'all') {
+      allUsers.forEach(displayAll);
+    } else if ( idName === 'online' ) {
+      offlineUsers.forEach(displayNone);
+      onlineUsers.forEach(displayBlock);
+    } else if (idName === 'offline') {
+      offlineUsers.forEach(displayBlock);
+      onlineUsers.forEach(displayNone);
+    }
+  }
+} // end filterUsers()
+const displayAll = (channel) => channel.style.display = 'block';
+const displayNone = (channel) => {
+  var grandParentEl = channel.parentElement.parentElement;
+  return grandParentEl.style.display = 'none';
+}
+const displayBlock = (channel) => {
+  var grandParentEl = channel.parentElement.parentElement;
+  return grandParentEl.style.display = 'block';
+}
+filterUsers();
 
 function ajaxReq(url) {
   return new Promise( function(resolve, reject){
