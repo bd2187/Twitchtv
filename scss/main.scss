@@ -1,0 +1,72 @@
+// Variables
+$pressStartFont: 'Press Start 2P', cursive;
+$twitchPurple: #6441a5;
+$yellow: #FADC59;
+$offWhite: #F2F2F2;
+
+// Mixins
+@mixin grid($cols, $mgn) {
+  margin-right: $mgn;
+  // margin-bottom: $mgn;
+  width: ( (100% - (($cols - 1) * $mgn)) / $cols);
+  &:nth-child(#{$cols}n){
+    margin-right: 0;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, p, a {
+  margin: 0;
+}
+
+.wrap {
+  background: $yellow;
+  .container {
+    padding: 1.5em;
+    width: 100%;
+  }
+}
+
+header {
+  margin-bottom: 1.3em;
+  .container {
+    text-align: center;
+
+    font-family: $pressStartFont;
+    color: $twitchPurple;
+    font-size: 1.12em;
+  }
+  .twitch-logo {
+    width: 60%;
+    margin-bottom: .5em;
+  }
+}
+
+section {
+  .container {
+    background: $offWhite;
+  }
+  .buttons {
+    // background: blue;
+    text-align: center;
+    margin-bottom: 2em;
+    padding: .5em 0;
+    button {
+      width: 30%;
+      padding: .5em;
+      border: none;
+      border-radius: 20px;
+      margin-right: 2%;
+      &:last-child {
+        margin-right: 0;
+      }
+
+      font-size: 1.12em;
+      background-color: $twitchPurple;
+      color: $offWhite;
+    }
+  }
+}
