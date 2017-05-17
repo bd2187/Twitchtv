@@ -53,11 +53,6 @@ p {
   float: left;
 }
 
-
-
-
-
-
 .clearfix::after {
   content: " ";
   display: table;
