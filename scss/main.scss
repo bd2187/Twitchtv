@@ -1,31 +1,5 @@
-// Variables
-$pressStartFont: 'Press Start 2P', cursive;
-$twitchPurple: #6441a5;
-$yellow: #FADC59;
-$offWhite: #F2F2F2;
-
-// Mixins
-@mixin hoverTransition($seconds) {
-  -webkit-transition: all $seconds;
-   -moz-transition: all $seconds;
-    -ms-transition: all $seconds;
-     -o-transition: all $seconds;
-        transition: all $seconds;
-}
-
-// @mixin verticalCenter {
-//   position: absolute;
-//   top: 50;
-//   transform: translateY(-50%);
-// }
-
-@mixin clearfix {
-  &:after { // clearfix
-    content: "";
-    display: block;
-    clear: both;
-  }
-}
+@import 'variables';
+@import 'mixins';
 
 * {
   box-sizing: border-box;
@@ -91,7 +65,7 @@ section {
       }
       &:hover {
         background: darken($twitchPurple, 20%);
-        @include hoverTransition(.5s);
+        @include hoverTransition(.8s);
       }
       &:focus {
         outline: 0;

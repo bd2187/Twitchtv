@@ -1,0 +1,16 @@
+// Mixins
+@mixin hoverTransition($seconds) {
+  -webkit-transition: all $seconds;
+   -moz-transition: all $seconds;
+    -ms-transition: all $seconds;
+     -o-transition: all $seconds;
+        transition: all $seconds;
+}
+
+@mixin clearfix {
+  &:after { // clearfix
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
