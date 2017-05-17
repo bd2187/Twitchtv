@@ -5,12 +5,25 @@ $yellow: #FADC59;
 $offWhite: #F2F2F2;
 
 // Mixins
-@mixin grid($cols, $mgn) {
-  margin-right: $mgn;
-  // margin-bottom: $mgn;
-  width: ( (100% - (($cols - 1) * $mgn)) / $cols);
-  &:nth-child(#{$cols}n){
-    margin-right: 0;
+@mixin hoverTransition($seconds) {
+  -webkit-transition: all $seconds;
+   -moz-transition: all $seconds;
+    -ms-transition: all $seconds;
+     -o-transition: all $seconds;
+        transition: all $seconds;
+}
+
+// @mixin verticalCenter {
+//   position: absolute;
+//   top: 50;
+//   transform: translateY(-50%);
+// }
+
+@mixin clearfix {
+  &:after { // clearfix
+    content: "";
+    display: block;
+    clear: both;
   }
 }
 
@@ -22,10 +35,16 @@ h1, p, a {
   margin: 0;
 }
 
+body, html {
+  width: 100%;
+}
+
 .wrap {
   background: $yellow;
+  min-height: 100vh;
+  padding: 1em;
   .container {
-    padding: 1.5em;
+    padding: .8em;
     width: 100%;
   }
 }
@@ -48,6 +67,8 @@ header {
 section {
   .container {
     background: $offWhite;
+    max-width: 648px;
+    margin: 0 auto;
   }
   .buttons {
     // background: blue;
@@ -59,14 +80,68 @@ section {
       padding: .5em;
       border: none;
       border-radius: 20px;
-      margin-right: 2%;
-      &:last-child {
-        margin-right: 0;
-      }
 
       font-size: 1.12em;
       background-color: $twitchPurple;
       color: $offWhite;
+
+      margin-right: 2%;
+      &:last-child {
+        margin-right: 0;
+      }
+      &:hover {
+        background: darken($twitchPurple, 20%);
+        @include hoverTransition(.5s);
+      }
+      &:focus {
+        outline: 0;
+        background-color: darken($twitchPurple, 20%);
+      }
+    }
+  } // end .buttons
+} // end section
+
+
+.channelContainer {
+  // background: red;
+  position: relative;
+  display: block;
+  margin-bottom: 1em;
+  padding: 1em;
+  @include clearfix;
+  &:hover {
+    box-shadow: 2px 2px 10px 7px grey;
+    @include hoverTransition(.5s);
+  }
+  .channelLogo, .channelDescription {
+    // background: pink;
+    float: left;
+  }
+  .channelLogo {
+    width: 20%;
+    img {
+      width: 100%;
+    }
+  }
+  .channelDescription {
+    width: 80%;
+    padding-left: 1em;
+    h1, p {
+      color: $twitchPurple;
+      margin-bottom: .5em;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    p {
+      display: inline-block;
+      margin-right: 1.2em;
+      // font-size: 1em;
+      &:last-child {
+        display: block;
+        color: grey;
+        font-size: .9em;
+      }
     }
   }
 }

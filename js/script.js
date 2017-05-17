@@ -1,7 +1,7 @@
 "use strict"
 
 var mod = ( function(){
-  var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
+  var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas",  "LIRIK"];
 
   var streams = twitchUsers.map(requestStreamInfo); // array of streaming info
   var channels = twitchUsers.map(requestChannelInfo); // array of channel info
@@ -27,8 +27,8 @@ var mod = ( function(){
             </div>
             <div class="channelDescription">
               <h1>${channel.display_name}</h1>
-              <p>Followers: ${channel.followers}</p>
-              <p>Views: ${channel.views}</p>
+              <p><i class="fa fa-user" aria-hidden="true"></i> ${channel.followers}</p>
+              <p><i class="fa fa-eye" aria-hidden="true"></i> ${channel.views}</p>
             </div>
           </div>
         </a>
@@ -65,7 +65,7 @@ var mod = ( function(){
     function cb(evt) {
       var onlineUsers = Array.from( document.querySelectorAll('.online') );
       var offlineUsers = Array.from( document.querySelectorAll('.offline') );
-      var allUsers = Array.from( document.querySelectorAll('.channelInfo') );
+      var allUsers = Array.from( document.querySelectorAll('.channelContainer') );
       var idName = evt.target.id;
 
       if ( idName === 'all') {
@@ -81,11 +81,11 @@ var mod = ( function(){
   } // end filterUsers()
   const displayAll = (channel) => channel.style.display = 'block';
   const displayNone = (channel) => {
-    var grandParentEl = channel.parentElement.parentElement;
+    var grandParentEl = channel.parentElement.parentElement.parentElement;
     return grandParentEl.style.display = 'none';
   }
   const displayBlock = (channel) => {
-    var grandParentEl = channel.parentElement.parentElement;
+    var grandParentEl = channel.parentElement.parentElement.parentElement;
     return grandParentEl.style.display = 'block';
   }
 
