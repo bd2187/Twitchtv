@@ -7,6 +7,12 @@
         transition: all $seconds;
 }
 
+@mixin mediaQuery($pixels) {
+  @media screen and (min-width: $pixels) {
+    @content;
+  }
+}
+
 @mixin clearfix {
   &:after { // clearfix
     content: "";
@@ -14,3 +20,18 @@
     clear: both;
   }
 }
+
+
+// @media screen and (min-width: 900px) {
+//     section {
+//       .container {
+//         max-width: 900px;
+//       }
+//       .buttons {
+//         button {
+//           max-width: 225px;
+//           font-size: 1.2em;
+//         }
+//       }
+//     }
+// }

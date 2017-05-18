@@ -1,7 +1,7 @@
 "use strict"
 
 var mod = ( function(){
-  var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas",  "LIRIK"];
+  var twitchUsers = ["ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas",  "LIRIK", "summit1g", "YoDa"];
 
   var streams = twitchUsers.map(requestStreamInfo); // array of streaming info
   var channels = twitchUsers.map(requestChannelInfo); // array of channel info
